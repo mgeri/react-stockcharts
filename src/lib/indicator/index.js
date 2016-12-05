@@ -11,6 +11,7 @@ import rsi from "./rsi";
 import atr from "./atr";
 import stochasticOscillator from "./stochasticOscillator";
 import forceIndex from "./forceIndex";
+import sar from "./sar";
 import elderRay from "./elderRay";
 import change from "./change";
 import elderImpulse from "./elderImpulse";
@@ -32,6 +33,7 @@ export {
 	atr,
 	stochasticOscillator,
 	forceIndex,
+	sar,
 	elderRay,
 	change,
 	elderImpulse,

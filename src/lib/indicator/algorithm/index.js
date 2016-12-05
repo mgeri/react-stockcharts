@@ -16,6 +16,7 @@ import atr from "./atr";
 import forceIndex from "./forceIndex";
 import smoothedForceIndex from "./smoothedForceIndex";
 import elderRay from "./elderRay";
+import sar from "./sar";
 import compare from "./compare";
 import change from "./change";
 
@@ -38,6 +39,7 @@ export {
 	forceIndex,
 	smoothedForceIndex,
 	elderRay,
+	sar,
 	compare,
 	change,
 };
