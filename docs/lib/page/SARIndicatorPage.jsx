@@ -17,14 +17,14 @@ class ForceIndexIndicatorPage extends React.Component {
 			<ContentSection title={ForceIndexIndicatorPage.title}>
 				<Row>
 					<Section colSpan={2}>
-						<aside dangerouslySetInnerHTML={{ __html: require("md/FORCE-INDEX-INDICATOR") }}></aside>
+						<TypeChooser>
+							{(type) => (<CandleStickChartWithSAR data={this.props.someData} type={type} />)}
+						</TypeChooser>
 					</Section>
 				</Row>
 				<Row>
 					<Section colSpan={2}>
-						<TypeChooser>
-							{(type) => (<CandleStickChartWithSAR data={this.props.someData} type={type} />)}
-						</TypeChooser>
+						<aside dangerouslySetInnerHTML={{ __html: require("md/SAR-INDICATOR") }}></aside>
 					</Section>
 				</Row>
 			</ContentSection>

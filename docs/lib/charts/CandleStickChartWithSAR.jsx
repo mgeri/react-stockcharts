@@ -6,7 +6,7 @@ import { timeFormat } from "d3-time-format";
 
 import { ChartCanvas, Chart, series, scale, coordinates, tooltip, axes, indicator, helper } from "react-stockcharts";
 
-var { CandlestickSeries, BarSeries, LineSeries, AreaSeries } = series;
+var { CandlestickSeries, BarSeries, LineSeries, AreaSeries, SARSeries } = series;
 var { discontinuousTimeScaleProvider } = scale;
 
 var { EdgeIndicator } = coordinates;
@@ -20,15 +20,25 @@ var { fitWidth } = helper;
 class CandleStickChartWithSAR extends React.Component {
 	render() {
 		var { data, type, width, ratio } = this.props;
+		var ema26 = ema()
+			.id(0)
+			.windowSize(26)
+			.merge((d, c) => {d.ema26 = c})
+			.accessor(d => d.ema26);
 
-		var s = sar()
+		var defaultSar = sar()
+			.accelerationFactor(0.02)
+			.maxAccelerationFactor(0.2)
+			.merge((d, c) => {d.sar = c})
+			.accessor(d => d.sar);
+
+		var dataWithSar = defaultSar(data);
 
 		return (
 			<ChartCanvas ratio={ratio} width={width} height={450}
 					margin={{ left: 90, right: 90, top: 70, bottom: 30 }} type={type}
 					seriesName="MSFT"
-					data={data}
-					calculator={[s]}
+					data={dataWithSar}
 					xAccessor={d => d.date}
 					xScaleProvider={discontinuousTimeScaleProvider}
 					xExtents={[new Date(2016, 0, 1), new Date(2016, 9, 11)]}>
@@ -42,10 +52,10 @@ class CandleStickChartWithSAR extends React.Component {
 
 					<CandlestickSeries />
 
-					<LineSeries yAccessor={d => d.sar} stroke="blue" />
-
 					<EdgeIndicator itemType="last" orient="right" edgeAt="right"
 						yAccessor={d => d.close} fill={d => d.close > d.open ? "#6BA583" : "#FF0000"}/>
+
+					<SARSeries yAccessor={d => d.sar}/>
 
 					<MouseCoordinateX
 						at="bottom"
